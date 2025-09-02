@@ -4,60 +4,60 @@ This repository contains an SQL script (data_cleaning.sql) designed to clean and
 
 📂 File Description
 
-data_cleaning.sql
-A step-by-step SQL script that:
+- data_cleaning.sql
+  A step-by-step SQL script that:
 
-Removes duplicates from the raw dataset.
+    - Removes duplicates from the raw dataset.
 
-Standardizes text fields (company names, industries, countries).
+    - Standardizes text fields (company names, industries, countries).
 
-Handles null and blank values by either imputing or removing them.
+    - Handles null and blank values by either imputing or removing them.
 
-Cleans date formats and converts them into proper SQL DATE type.
+    - Cleans date formats and converts them into proper SQL DATE type.
 
-Drops unnecessary helper columns after processing.
+    - Drops unnecessary helper columns after processing.
 
 🗂️ Database Tables Used
 
-layoffs – Original dataset table containing raw layoff records.
+    1. layoffs – Original dataset table containing raw layoff records.
 
-layoffs_staging – Temporary staging table created as a copy of layoffs for duplicate detection.
+    2. layoffs_staging – Temporary staging table created as a copy of layoffs for duplicate detection.
 
-layoffs_staging2 – Final cleaned dataset table with standardized and deduplicated records.
+    3. layoffs_staging2 – Final cleaned dataset table with standardized and deduplicated records.
 
 ⚙️ Key Steps in the Script
 
-Duplicate Removal
+1. Duplicate Removal
 
-Uses ROW_NUMBER() to identify duplicates based on multiple columns.
+    - Uses ROW_NUMBER() to identify duplicates based on multiple columns.
 
-Inserts unique rows into layoffs_staging2.
+    - Inserts unique rows into layoffs_staging2.
 
-Deletes duplicate rows.
+    - Deletes duplicate rows.
 
-Standardization
+2. Standardization
 
-Trims extra spaces from company names.
+    - Trims extra spaces from company names.
 
-Normalizes industry labels (e.g., merging all variations of "Crypto").
+    - Normalizes industry labels (e.g., merging all variations of "Crypto").
 
-Fixes inconsistent country names (United States% → United States).
+    - Fixes inconsistent country names (United States% → United States).
 
-Converts date field from text to SQL DATE format.
+    - Converts date field from text to SQL DATE format.
 
-Null Value Handling
+3. Null Value Handling
 
-Sets empty strings in industry to NULL.
+    - Sets empty strings in industry to NULL.
 
-Uses self-join to fill missing industry values from other company records.
+    - Uses self-join to fill missing industry values from other company records.
 
-Removes rows where both total_laid_off and percentage_laid_off are NULL.
+    - Removes rows where both total_laid_off and percentage_laid_off are NULL.
 
-Final Cleanup
+4. Final Cleanup
 
-Drops the row_num helper column.
+     - Drops the row_num helper column.
 
-Produces a cleaned dataset in layoffs_staging2.
+    - Produces a cleaned dataset in layoffs_staging2.
 
 📊 Data Flow Diagram
 erDiagram
@@ -103,22 +103,22 @@ erDiagram
 
 ✅ Output
 
-A cleaned and standardized layoffs dataset stored in layoffs_staging2.
+    - A cleaned and standardized layoffs dataset stored in layoffs_staging2.
 
-Ready for exploratory data analysis (EDA), visualization, or reporting.
+    - Ready for exploratory data analysis (EDA), visualization, or reporting.
 
 🔧 Usage
 
-Import your raw layoffs dataset into a table called layoffs.
+    - Import your raw layoffs dataset into a table called layoffs.
 
-Run the data_cleaning.sql script step by step in your SQL environment (MySQL recommended).
+    - Run the data_cleaning.sql script step by step in your SQL environment (MySQL recommended).
 
-After execution, the cleaned dataset will be available in layoffs_staging2.
+    - After execution, the cleaned dataset will be available in layoffs_staging2.
 
 📌 Notes
 
-The script assumes the raw dataset is loaded into a table named layoffs.
+    - The script assumes the raw dataset is loaded into a table named layoffs.
 
-The database schema name (world_layoffs) may need adjustment depending on your environment.
+    - The database schema name (world_layoffs) may need adjustment depending on your environment.
 
-Designed for MySQL 8+ (due to use of ROW_NUMBER() and CTEs).
+    - Designed for MySQL 8+ (due to use of ROW_NUMBER() and CTEs).
